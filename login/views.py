@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from login.models import User
 from . import models
 from . import forms
 import hashlib
@@ -14,7 +15,8 @@ def hash_code(s, salt='mysite'):
 def index(request):
     if not request.session.get('is_login', None):
         return redirect('/login/')
-    return render(request, 'login/index.html')
+    users = User.objects.all()
+    return render(request, 'login/index.html', {'users': users})
 
 
 def login(request):
